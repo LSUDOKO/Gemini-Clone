@@ -7,8 +7,9 @@ async function runChat(prompt) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    console.log(response.text());
-    return response.text();
+    const text = response.text();
+    console.log(text);
+    return text;
   } catch (error) {
     console.error("Error in chat:", error);
     return "Sorry, there was an error processing your request.";
