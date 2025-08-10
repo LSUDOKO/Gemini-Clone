@@ -11,7 +11,7 @@
 #root{
   min-height:100vh;
   display: flex;
-  animation: fadeIn;
+  animation: fadeIn 1.5s;
 
 }
 @keyframes fadeIn{
