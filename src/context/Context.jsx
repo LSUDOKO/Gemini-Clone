@@ -19,6 +19,7 @@ const ContextProvider = (props) => {
 
     const onSent = async () => {
         try {
+            setResultData(""); // Clear previous result
             setLoading(true);
             setShowResult(true);
             setRecentPrompt(input);
@@ -27,17 +28,24 @@ const ContextProvider = (props) => {
             let responseArray = response.split("**");
             let newResponse = "";  // Initialize with empty string
             
-            // Process bold text and line breaks
+            // Enhanced formatting for better structure
             for (let i = 0; i < responseArray.length; i++) {
                 if (i === 0 || i % 2 !== 1) {
                     newResponse += responseArray[i];
                 } else {
-                    newResponse += "<b>"+"<b>" + responseArray[i] + "</b>"+"</b>";
+                    newResponse += "<strong>" + responseArray[i] + "</strong>";
                 }
             }
             
-            // Replace line breaks
-            let formattedResponse = newResponse.split("\n").join("<br/>");
+            // Enhanced formatting with better structure
+            let formattedResponse = newResponse
+                .split("\n").join("<br/>")
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                .replace(/\*(.*?)\*/g, "<em>$1</em>")
+                .replace(/`(.*?)`/g, "<code>$1</code>")
+                .replace(/###\s(.*?)(<br\/>|$)/g, "<h3>$1</h3>")
+                .replace(/##\s(.*?)(<br\/>|$)/g, "<h2>$1</h2>")
+                .replace(/#\s(.*?)(<br\/>|$)/g, "<h1>$1</h1>");
             let newResponseArray=formattedResponse.split(" ");
             for (let i=0;i<newResponseArray.length;i++){
                 const nextWord=newResponseArray[i];
@@ -51,6 +59,13 @@ const ContextProvider = (props) => {
         }
     }
 
+    const newChat = () => {
+        setShowResult(false);
+        setResultData("");
+        setRecentPrompt("");
+        setInput("");
+    }
+
     const contextValue = {
         input,
         setInput,
@@ -58,9 +73,11 @@ const ContextProvider = (props) => {
         resultData,
         showResult,
         recentPrompt,
+        setRecentPrompt,
         prevPrompts,
         setPrevPrompts,
-        onSent
+        onSent,
+        newChat
     }
 
     return (

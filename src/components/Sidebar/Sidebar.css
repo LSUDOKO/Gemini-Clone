@@ -50,6 +50,15 @@
     border-radius: 50px;
     color: #282828;
     cursor: pointer;
+    max-width: 200px;
+}
+
+.sidebar .recent-entry p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    font-size: 14px;
 }
 
 .sidebar .recent-entry:hover{
