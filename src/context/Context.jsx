@@ -37,15 +37,38 @@ const ContextProvider = (props) => {
                 }
             }
             
-            // Enhanced formatting with better structure
+            // Enhanced formatting with better structure and code blocks
             let formattedResponse = newResponse
                 .split("\n").join("<br/>")
                 .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
                 .replace(/\*(.*?)\*/g, "<em>$1</em>")
-                .replace(/`(.*?)`/g, "<code>$1</code>")
                 .replace(/###\s(.*?)(<br\/>|$)/g, "<h3>$1</h3>")
                 .replace(/##\s(.*?)(<br\/>|$)/g, "<h2>$1</h2>")
                 .replace(/#\s(.*?)(<br\/>|$)/g, "<h1>$1</h1>");
+
+            // // Enhanced code block formatting
+            // formattedResponse = formattedResponse.replace(
+            //     /```(\w+)?\s*<br\/>([\s\S]*?)```/g,
+            //     (match, language, code) => {
+            //         const lang = language || 'text';
+            //         const cleanCode = code.replace(/<br\/>/g, '\n').trim();
+            //         const codeId = 'code-' + Math.random().toString(36).substr(2, 9);
+            //         return `
+            //             <div class="code-block">
+            //                 <div class="code-block-header">
+            //                     <span class="code-block-language">${lang}</span>
+            //                     <button class="copy-button" onclick="copyCode('${codeId}')">
+            //                         📋 Copy
+            //                     </button>
+            //                 </div>
+            //                 <pre><code id="${codeId}">${cleanCode}</code></pre>
+            //             </div>
+            //         `;
+            //     }
+            // );
+
+            // // Handle inline code
+            // formattedResponse = formattedResponse.replace(/`([^`]+)`/g, "<code>$1</code>");
             let newResponseArray=formattedResponse.split(" ");
             for (let i=0;i<newResponseArray.length;i++){
                 const nextWord=newResponseArray[i];
